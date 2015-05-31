@@ -17,4 +17,4 @@ Improves fcntl.flock usage.
 Features
 --------
 
-* TODO
+* Flock context manager
