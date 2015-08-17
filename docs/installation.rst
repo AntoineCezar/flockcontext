@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install flock
+    $ pip install flockcontext
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv flock
-    $ pip install flock
+    $ mkvirtualenv flockcontext
+    $ pip install flockcontext

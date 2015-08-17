@@ -15,31 +15,29 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read().replace('.. :changelog:', '')
 
 requirements = [
-    # TODO: put package requirements here
 ]
 
 test_requirements = [
-    # TODO: put package test requirements here
 ]
 
 setup(
-    name='flock',
+    name='flockcontext',
     version='0.1.0',
     description="Improves fcntl.flock usage",
     long_description=readme + '\n\n' + history,
     author="Antoine Cezar",
     author_email='antoine@cezar.fr',
-    url='https://github.com/AntoineCezar/flock',
+    url='https://github.com/AntoineCezar/flockcontext',
     packages=[
-        'flock',
+        'flockcontext',
     ],
-    package_dir={'flock':
-                 'flock'},
+    package_dir={'flockcontext':
+                 'flockcontext'},
     include_package_data=True,
     install_requires=requirements,
     license="BSD",
     zip_safe=False,
-    keywords='flock',
+    keywords='flock context',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
