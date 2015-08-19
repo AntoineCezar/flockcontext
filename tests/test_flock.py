@@ -10,7 +10,6 @@ Tests for `flock` module.
 
 import unittest
 import fcntl
-import io
 import os
 import tempfile
 
@@ -47,7 +46,7 @@ class TestFlock(unittest.TestCase):
     def unlock(self, fd):
         fcntl.flock(fd, fcntl.LOCK_UN)
 
-    def test_file_is_locked_whiting_context(self):
+    def test_file_is_locked_within_context(self):
         with open(self.lockfile, 'w') as fd:
             with Flock(fd) as lock:
                 self.assertLocked(self.lockfile)
@@ -59,7 +58,7 @@ class TestFlock(unittest.TestCase):
 
             self.assertUnlocked(self.lockfile)
 
-    def test_non_blocking_dont_wait_for_lock(self):
+    def test_non_blocking_does_not_wait_for_lock(self):
         locked_fd = self.exclusive_lock(self.lockfile)
 
         with self.assertRaises(IOError):
