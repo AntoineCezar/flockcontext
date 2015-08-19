@@ -68,6 +68,19 @@ class TestFlock(unittest.TestCase):
 
         self.unlock(locked_fd)
 
+    def test_it_can_be_released_within_context(self):
+        with open(self.lockfile, 'w') as fd:
+            with Flock(fd) as lock:
+                lock.release()
+                self.assertUnlocked(self.lockfile)
+
+    def test_it_can_be_acquired_within_context(self):
+        with open(self.lockfile, 'w') as fd:
+            with Flock(fd) as lock:
+                lock.release()
+                lock.acquire()
+                self.assertLocked(self.lockfile)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -46,6 +46,7 @@ class Flock(object):
 
     def __enter__(self):
         self.acquire()
+        return self
 
     def __exit__(self, exec_type, exec_val, exec_tb):
         self.release()

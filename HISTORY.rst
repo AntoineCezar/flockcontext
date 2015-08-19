@@ -3,6 +3,11 @@
 History
 -------
 
+0.2.0 (2015-08-20)
+------------------
+
+* Add Flock relase and acquire capability withing context.
+
 0.1.0 (2015-08-19)
 ------------------
 
