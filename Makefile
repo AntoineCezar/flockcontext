@@ -14,7 +14,7 @@ help:
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
 
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-pyc clean-test clean-coverage
 
 clean-build:
 	rm -fr build/
@@ -31,6 +31,8 @@ clean-pyc:
 
 clean-test:
 	rm -fr .tox/
+
+clean-coverage:
 	rm -f .coverage
 	rm -fr htmlcov/
 
@@ -43,11 +45,13 @@ test:
 test-all:
 	tox
 
-coverage:
-	coverage run --source flockcontext setup.py test
+coverage: clean-coverage .coverage
 	coverage report -m
 	coverage html
 	open htmlcov/index.html
+
+.coverage:
+	coverage run --source flockcontext setup.py test
 
 docs:
 	rm -f docs/flockcontext.rst
