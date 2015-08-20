@@ -8,8 +8,8 @@ Flockcontext
 .. image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
         :target: http://flockcontext.readthedocs.org/
 
-.. image:: https://coveralls.io/repos/AntoineCezar/flockcontext/badge.svg?branch=master&service=github
-         :target: https://coveralls.io/github/AntoineCezar/flockcontext?branch=master
+.. image:: https://img.shields.io/coveralls/AntoineCezar/flockcontext.svg
+        :target: https://coveralls.io/github/AntoineCezar/flockcontext
 
 .. image:: https://img.shields.io/pypi/v/flockcontext.svg
         :target: https://pypi.python.org/pypi/flockcontext
