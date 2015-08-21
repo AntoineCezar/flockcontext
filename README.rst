@@ -20,23 +20,47 @@ Improves `fcntl.flock <https://docs.python.org/library/fcntl.html#fcntl.flock>`_
 ``flock`` is a Unix command for `file locking <https://en.wikipedia.org/wiki/File_locking>`_,
 the mecanism that controls access restrictions of files.
 
-Features
---------
+Usage
+-----
 
-* Flock as a context manager
+Exclusive blocking lock::
 
-::
+    from flockcontext import FlockOpen
+
+    with FlockOpen('/tmp/my.lock', 'w') as lock:
+        lock.fd.write('Locked\n')
+
+Exclusive non-blocking lock::
+
+    from flockcontext import FlockOpen
+
+    try:
+        with FlockOpen('/tmp/my.lock', 'w', blocking=False) as lock:
+            lock.fd.write('Locked\n')
+    except IOError as e:
+        print('Can not acquire lock')
+
+Shared blocking lock::
 
     from flockcontext import Flock
 
-    with open('/tmp/my.lock', 'w') as fd:
-        with Flock(fd):
-            pass # Do something
+    with FlockOpen('/tmp/my.lock', 'w', exclusive=False) as lock:
+        lock.fd.write('Locked\n')
 
-Todo
-----
+Acquire and release within context::
 
-* Avoid manual opening of files in common cases
+    from flockcontext import FlockOpen
+
+    with FlockOpen('/tmp/my.lock', 'w') as lock:
+        print('Lock acquired')
+        lock.fd.write('Locked\n')
+
+        lock.release()
+        print('Lock released')
+
+        lock.acquire()
+        print('Lock acquired')
+        lock.fd.write('Locked\n')
 
 License
 -------

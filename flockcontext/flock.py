@@ -5,32 +5,48 @@ import fcntl
 class Flock(object):
     """Locks an opened file.
 
-        Blocking lock exemple:
+        Blocking lock:
 
             >>> from flockcontext import Flock
-
+            >>>
             >>> with open('/tmp/my.lock', 'w') as fd:
             >>>     with Flock(fd):
-            >>>         pass # Do something
+            >>>         lock.fd.write('Locked\n')
 
-        Non blocking lock exemple:
+        Non blocking lock:
 
             >>> from flockcontext import Flock
-
+            >>>
             >>> with open('/tmp/my.lock', 'w') as fd:
             >>>     try:
             >>>         with Flock(fd, blocking=False):
-            >>>             pass  # Do something
+            >>>             lock.fd.write('Locked\n')
             >>>     except IOError as e:
-            >>>         pass  # Do something else
+            >>>         print('Can not acquire lock')
 
-        Shared lock exemple:
+        Shared lock:
 
             >>> from flockcontext import Flock
-
+            >>>
             >>> with open('/tmp/my.lock', 'w') as fd:
             >>>     with Flock(fd, exclusive=False):
-            >>>         pass # Do something
+            >>>         lock.fd.write('Locked\n')
+
+        Acquire and release within context:
+
+            >>> from flockcontext import Flock
+            >>>
+            >>> with open('/tmp/my.lock', 'w') as fd:
+            >>>     with Flock(fd) as lock:
+            >>>         print('Lock acquired')
+            >>>         fd.write('Locked\n')
+            >>>
+            >>>         lock.release()
+            >>>         print('Lock released')
+            >>>
+            >>>         lock.acquire()
+            >>>         print('Lock acquired')
+            >>>         fd.write('Locked\n')
     """
 
     def __init__(self, fd, exclusive=True, blocking=True):
