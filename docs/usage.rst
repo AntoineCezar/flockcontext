@@ -3,7 +3,7 @@ Usage
 =====
 
 flockcontext provide two context manager for `fcntl.flock`_.
-``Flock`` lock an opened file while ``FlockOpen`` does the same job but open
+``Flock`` locks an opened file while ``FlockOpen`` does the same job but opens
 the file for you.
 
 .. _`fcntl.flock`: https://docs.python.org/library/fcntl.html#fcntl.flock
