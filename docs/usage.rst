@@ -59,7 +59,7 @@ Blocking lock::
 
     with open('/tmp/my.lock', 'w') as fd:
         with Flock(fd):
-            lock.fd.write('Locked\n')
+            fd.write('Locked\n')
 
 Non blocking lock::
 
@@ -68,7 +68,7 @@ Non blocking lock::
     with open('/tmp/my.lock', 'w') as fd:
         try:
             with Flock(fd, blocking=False):
-                lock.fd.write('Locked\n')
+                fd.write('Locked\n')
         except IOError as e:
             print('Can not acquire lock')
 
@@ -78,7 +78,7 @@ Shared lock::
 
     with open('/tmp/my.lock', 'w') as fd:
         with Flock(fd, exclusive=False):
-            lock.fd.write('Locked\n')
+            fd.write('Locked\n')
 
 Acquire and release within context::
 
