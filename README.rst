@@ -62,7 +62,7 @@ Acquire and release within context::
         print('Lock acquired')
         lock.fd.write('Locked\n')
 
-Locking alredy opened file::
+Locking already opened file::
 
     from flockcontext import Flock
 
