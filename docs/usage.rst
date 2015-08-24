@@ -11,14 +11,14 @@ the file for you.
 FlockOpen exemples
 ------------------
 
-Exclusive blocking lock::
+Exclusive blocking lock:: python
 
     from flockcontext import FlockOpen
 
     with FlockOpen('/tmp/my.lock', 'w') as lock:
         lock.fd.write('Locked\n')
 
-Exclusive non-blocking lock::
+Exclusive non-blocking lock:: python
 
     from flockcontext import FlockOpen
 
@@ -28,14 +28,14 @@ Exclusive non-blocking lock::
     except IOError as e:
         print('Can not acquire lock')
 
-Shared blocking lock::
+Shared blocking lock:: python
 
     from flockcontext import Flock
 
     with FlockOpen('/tmp/my.lock', 'w', exclusive=False) as lock:
         lock.fd.write('Locked\n')
 
-Acquire and release within context::
+Acquire and release within context:: python
 
     from flockcontext import FlockOpen
 
@@ -53,7 +53,7 @@ Acquire and release within context::
 Flock exemples
 --------------
 
-Blocking lock::
+Blocking lock:: python
 
     from flockcontext import Flock
 
@@ -61,7 +61,7 @@ Blocking lock::
         with Flock(fd):
             fd.write('Locked\n')
 
-Non blocking lock::
+Non blocking lock:: python
 
     from flockcontext import Flock
 
@@ -72,7 +72,7 @@ Non blocking lock::
         except IOError as e:
             print('Can not acquire lock')
 
-Shared lock::
+Shared lock:: python
 
     from flockcontext import Flock
 
@@ -80,7 +80,7 @@ Shared lock::
         with Flock(fd, exclusive=False):
             fd.write('Locked\n')
 
-Acquire and release within context::
+Acquire and release within context:: python
 
     from flockcontext import Flock
 

@@ -62,6 +62,14 @@ Acquire and release within context::
         print('Lock acquired')
         lock.fd.write('Locked\n')
 
+Locking alredy opened file::
+
+    from flockcontext import Flock
+
+    with open('/tmp/my.lock', 'w') as fd:
+        with Flock(fd):
+            fd.write('Locked\n')
+
 License
 -------
 

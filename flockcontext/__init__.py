@@ -2,7 +2,7 @@
 
 __author__ = 'Antoine Cezar'
 __email__ = 'antoine@cezar.fr'
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 from .flock import Flock
