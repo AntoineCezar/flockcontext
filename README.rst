@@ -30,6 +30,13 @@ Exclusive blocking lock::
     with FlockOpen('/tmp/my.lock', 'w') as lock:
         lock.fd.write('Locked\n')
 
+Exclusive blocking lock with 1 second timeout::
+
+    from flockcontext import FlockOpen
+
+    with FlockOpen('/tmp/my.lock', 'w', timeout=1) as lock:
+        lock.fd.write('Locked\n')
+
 Exclusive non-blocking lock::
 
     from flockcontext import FlockOpen

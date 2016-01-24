@@ -11,6 +11,7 @@ Tests for `flock` module.
 import unittest
 
 from flockcontext import Flock
+from timeoutcontext import timeout, TimeoutException
 
 from .flock_testcase import FlockTestCase
 
@@ -31,14 +32,11 @@ class TestFlock(FlockTestCase):
             self.assertUnlocked(self.lockfile)
 
     def test_non_blocking_does_not_wait_for_lock(self):
-        locked_fd = self.exclusive_lock(self.lockfile)
-
-        with self.assertRaises(IOError):
-            with open(self.lockfile, 'w') as fd:
-                with Flock(fd, blocking=False) as lock:
-                    pass
-
-        self.unlock(locked_fd)
+        with self.exclusive_lock(self.lockfile) as locked_fd:
+            with self.assertRaises(IOError):
+                with open(self.lockfile, 'w') as fd:
+                    with Flock(fd, blocking=False) as lock:
+                        pass
 
     def test_it_can_be_released_within_context(self):
         with open(self.lockfile, 'w') as fd:
@@ -52,6 +50,20 @@ class TestFlock(FlockTestCase):
                 lock.release()
                 lock.acquire()
                 self.assertLocked(self.lockfile)
+
+    def test_it_raise_timeouterror_if_timeout_is_reached(self):
+        with self.exclusive_lock(self.lockfile) as locked_fd:
+            with self.assertRaises(TimeoutException):
+                with open(self.lockfile, 'w') as fd:
+                    with Flock(fd, timeout=1) as lock:
+                        pass
+
+    def test_timeout_is_ignored_when_not_blocking(self):
+        with self.exclusive_lock(self.lockfile) as locked_fd:
+            with self.assertRaises(IOError):
+                with open(self.lockfile, 'w') as fd:
+                    with Flock(fd, blocking=False, timeout=1) as lock:
+                        pass
 
 
 if __name__ == '__main__':

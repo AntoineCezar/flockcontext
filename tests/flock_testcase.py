@@ -12,9 +12,9 @@ import unittest
 import fcntl
 import os
 import tempfile
+from contextlib import contextmanager
 
 from flockcontext import Flock
-
 
 LOCK_EX_NB = fcntl.LOCK_EX | fcntl.LOCK_NB
 
@@ -38,10 +38,13 @@ class FlockTestCase(unittest.TestCase):
         except IOError:
             self.fail('%s is locked.' % lockfile)
 
+    @contextmanager
     def exclusive_lock(self, filepath):
         fd = open(filepath, 'w')
         fcntl.flock(fd, LOCK_EX_NB)
-        return fd
 
-    def unlock(self, fd):
-        fcntl.flock(fd, fcntl.LOCK_UN)
+        try:
+            yield fd
+        finally:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+            fd.close()

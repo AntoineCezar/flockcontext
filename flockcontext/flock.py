@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import fcntl
 
+from timeoutcontext import timeout
+
 
 class Flock(object):
     """Locks an opened file.
@@ -11,6 +13,14 @@ class Flock(object):
             >>>
             >>> with open('/tmp/my.lock', 'w') as fd:
             >>>     with Flock(fd):
+            >>>         lock.fd.write('Locked\n')
+
+        Blocking lock with timeout:
+
+            >>> from flockcontext import Flock
+            >>>
+            >>> with open('/tmp/my.lock', 'w') as fd:
+            >>>     with Flock(fd, timeout=1):
             >>>         lock.fd.write('Locked\n')
 
         Non blocking lock:
@@ -49,16 +59,23 @@ class Flock(object):
             >>>         fd.write('Locked\n')
     """
 
-    def __init__(self, fd, exclusive=True, blocking=True):
+    def __init__(self, fd, exclusive=True, blocking=True, timeout=None):
         self._fd = fd
+        self._exclusive = exclusive
+        self._blocking = blocking
+        self._timeout = timeout
 
-        if exclusive:
-            self._op = fcntl.LOCK_EX
+    @property
+    def _op(self):
+        if self._exclusive:
+            op = fcntl.LOCK_EX
         else:
-            self._op = fcntl.LOCK_SH
+            op = fcntl.LOCK_SH
 
-        if not blocking:
-            self._op = self._op | fcntl.LOCK_NB
+        if not self._blocking:
+            op = op | fcntl.LOCK_NB
+
+        return op
 
     def __enter__(self):
         self.acquire()
@@ -68,7 +85,11 @@ class Flock(object):
         self.release()
 
     def acquire(self):
-        fcntl.flock(self._fd, self._op)
+        if self._blocking:
+            with timeout(self._timeout):
+                fcntl.flock(self._fd, self._op)
+        else:
+                fcntl.flock(self._fd, self._op)
 
     def release(self):
         fcntl.flock(self._fd, fcntl.LOCK_UN)

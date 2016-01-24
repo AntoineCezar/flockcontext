@@ -12,6 +12,13 @@ class FlockOpen(object):
             >>> with FlockOpen('/tmp/my.lock', 'w') as lock:
             >>>     lock.fd.write('Locked\n')
 
+        Blocking lock wih timeout exemple:
+
+            >>> from flockcontext import FlockOpen
+            >>>
+            >>> with FlockOpen('/tmp/my.lock', 'w', timeout=1) as lock:
+            >>>     lock.fd.write('Locked\n')
+
         Non blocking lock exemple:
 
             >>> from flockcontext import FlockOpen
