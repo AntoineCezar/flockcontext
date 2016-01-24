@@ -17,20 +17,16 @@ except NameError:
 class TestFlockOpen(FlockTestCase):
 
     def test_it_as_a_file_descriptor_object(self):
-        with FlockOpen(self.lockfile, 'w') as lock:
+        with FlockOpen(self.lockfile_path, 'w') as lock:
             self.assertIsInstance(lock.fd, TextIOWrapper)
 
     def test_it_can_be_unlocked_within_context(self):
-        with FlockOpen(self.lockfile, 'w') as lock:
+        with FlockOpen(self.lockfile_path, 'w') as lock:
             lock.release()
-            self.assertUnlocked(self.lockfile)
+            self.assertUnlocked(self.lockfile_path)
 
     def test_it_can_be_acquired_within_context(self):
-        with FlockOpen(self.lockfile, 'w') as lock:
+        with FlockOpen(self.lockfile_path, 'w') as lock:
             lock.release()
             lock.acquire()
-            self.assertLocked(self.lockfile)
-
-
-if __name__ == '__main__':
-    unittest.main()
+            self.assertLocked(self.lockfile_path)
