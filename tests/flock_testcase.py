@@ -12,7 +12,6 @@ import unittest
 import fcntl
 import os
 import tempfile
-from contextlib import contextmanager
 
 from flockcontext import Flock
 
@@ -22,9 +21,9 @@ LOCK_EX_NB = fcntl.LOCK_EX | fcntl.LOCK_NB
 class FlockTestCase(unittest.TestCase):
 
     def setUp(self):
-        _, path = tempfile.mkstemp()
-        self.lockfile = path
-        self.addCleanup(os.remove, path)
+        handle, path = self.mkstemp()
+        self.lockfile_handle = handle
+        self.lockfile_path = path
 
     def assertLocked(self, filepath):
         with self.assertRaises(IOError):
@@ -38,13 +37,19 @@ class FlockTestCase(unittest.TestCase):
         except IOError:
             self.fail('%s is locked.' % lockfile)
 
-    @contextmanager
-    def exclusive_lock(self, filepath):
-        fd = open(filepath, 'w')
-        fcntl.flock(fd, LOCK_EX_NB)
+    def mkstemp(self):
+        handle, path = tempfile.mkstemp()
+        self.addCleanup(os.remove, path)
 
-        try:
-            yield fd
-        finally:
-            fcntl.flock(fd, fcntl.LOCK_UN)
-            fd.close()
+        return handle, path
+
+    def lock(self, path):
+        fd = self.open(path)
+        fcntl.flock(fd, LOCK_EX_NB)
+        self.addCleanup(fcntl.flock, fd, fcntl.LOCK_UN)
+
+    def open(self, path, mode='r'):
+        fd = open(path, mode)
+        self.addCleanup(fd.close)
+
+        return fd
