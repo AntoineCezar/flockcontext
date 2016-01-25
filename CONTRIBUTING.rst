@@ -66,7 +66,7 @@ Ready to contribute? Here's how to set up `flockcontext` for local development.
 
     $ mkvirtualenv flockcontext
     $ cd flockcontext/
-    $ python setup.py develop
+    $ make develop
 
 4. Create a branch for local development::
 
@@ -74,21 +74,23 @@ Ready to contribute? Here's how to set up `flockcontext` for local development.
 
    Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests, including testing other Python versions with tox::
+5. When you're done making changes, check that your changes pass the tests::
+    $ make test
 
-    $ flake8 flockcontext tests
-    $ python setup.py test
-    $ tox
+6. Check also that they pass the linter::
+    $ pip install flake8
+    $ make lint
 
-   To get flake8 and tox, just pip install them into your virtualenv.
+7. And that they pass other Python versions (requires https://docs.docker.com/)::
+    $ make test-all
 
-6. Commit your changes and push your branch to GitHub::
+8. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+9. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
 -----------------------
@@ -102,10 +104,3 @@ Before you submit a pull request, check that it meets these guidelines:
 3. The pull request should work for Python 2.6, 2.7, 3.3, and 3.4, and for PyPy. Check
    https://travis-ci.org/AntoineCezar/flockcontext/pull_requests
    and make sure that the tests pass for all supported Python versions.
-
-Tips
-----
-
-To run a subset of tests::
-
-    $ python -m unittest tests.test_flock
