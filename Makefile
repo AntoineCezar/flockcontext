@@ -9,10 +9,12 @@ help:
 	@echo "test - run tests quickly with the default Python"
 	@echo "test-all - run tests on every Python version with tox"
 	@echo "coverage - check code coverage quickly with the default Python"
+	@echo "coverage-html - check code coverage quickly with the default Python"
 	@echo "docs - generate Sphinx HTML documentation, including API docs"
 	@echo "release - package and upload a release"
 	@echo "dist - package"
-	@echo "install - install the package to the active Python's site-packages"
+	@echo "develop - link the package into the active Python's site-packages"
+	@echo "install - install the package into the active Python's site-packages"
 
 clean: clean-build clean-pyc clean-test clean-coverage
 
@@ -42,15 +44,28 @@ lint:
 test:
 	python setup.py test
 
-test-all:
-	tox
+test-all: test-py27 test-py33 test-py34 test-py35
 
-coverage: clean-coverage .coverage
+test-py27:
+	./docker-test.sh python:2.7
+
+test-py33:
+	./docker-test.sh python:3.3
+
+test-py34:
+	./docker-test.sh python:3.4
+
+test-py35:
+	./docker-test.sh python:3.5
+
+coverage: .coverage
 	coverage report -m
+
+coverage-html: .coverage
 	coverage html
 	open htmlcov/index.html
 
-.coverage:
+.coverage:  clean-coverage
 	coverage run --source flockcontext setup.py test
 
 docs:
@@ -69,6 +84,9 @@ dist: clean
 	python setup.py sdist
 	python setup.py bdist_wheel
 	ls -l dist
+
+develop: clean
+	python setup.py develop
 
 install: clean
 	python setup.py install
