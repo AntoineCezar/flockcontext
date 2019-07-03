@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import sys
 import unittest
 
 from flockcontext import Flock
-from timeoutcontext import timeout, TimeoutException
+from timeoutcontext import timeout
+if sys.version_info < (3, 3):
+    from timeoutcontext._timeout import TimeoutError
 
 from .flock_testcase import FlockTestCase
 
@@ -45,7 +48,7 @@ class TestFlock(FlockTestCase):
     def test_it_raise_timeouterror_if_timeout_is_reached(self):
         self.lock(self.lockfile_path)
 
-        with self.assertRaises(TimeoutException):
+        with self.assertRaises(TimeoutError):
             with Flock(self.lockfile_handle, timeout=1) as lock:
                 pass
 
