@@ -44,7 +44,7 @@ lint:
 test:
 	python setup.py test
 
-test-all: test-py27 test-py33 test-py34 test-py35
+test-all: test-py27 test-py33 test-py34 test-py35 test-py36 test-py37
 
 test-py27:
 	./docker-test.sh python:2.7
@@ -57,6 +57,12 @@ test-py34:
 
 test-py35:
 	./docker-test.sh python:3.5
+
+test-py36:
+	./docker-test.sh python:3.6
+
+test-py37:
+	./docker-test.sh python:3.7
 
 coverage: .coverage
 	coverage report -m
