@@ -3,6 +3,14 @@
 History
 -------
 
+0.4.0 (2019-07-03)
+------------------
+
+* Use docker for mutiple Python version testing from 2.7 to 3.7
+* Add proper BSD licence file
+* Add timeout for blocking lock
+* Upgrade development status to Production/Stable
+
 0.3.1 (2015-08-24)
 ------------------
 
