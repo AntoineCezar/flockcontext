@@ -23,7 +23,7 @@ test_requirements = [
 
 setup(
     name='flockcontext',
-    version='0.3.1',
+    version='0.4.0',
     description="Improves fcntl.flock usage",
     long_description=readme + '\n\n' + history,
     author="Antoine Cezar",
@@ -40,7 +40,7 @@ setup(
     zip_safe=False,
     keywords='flock context',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
