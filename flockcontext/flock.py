@@ -10,53 +10,59 @@ class Flock(object):
         Blocking lock:
 
             >>> from flockcontext import Flock
+            >>> from tempfile import NamedTemporaryFile
             >>>
-            >>> with open('/tmp/my.lock', 'w') as fd:
-            >>>     with Flock(fd):
-            >>>         lock.fd.write('Locked\n')
+            >>> with NamedTemporaryFile() as fd:
+            ...     with Flock(fd):
+            ...         fd.write('Locked')
 
         Blocking lock with timeout:
 
             >>> from flockcontext import Flock
+            >>> from tempfile import NamedTemporaryFile
             >>>
-            >>> with open('/tmp/my.lock', 'w') as fd:
-            >>>     with Flock(fd, timeout=1):
-            >>>         lock.fd.write('Locked\n')
+            >>> with NamedTemporaryFile() as fd:
+            ...     with Flock(fd, timeout=1):
+            ...         fd.write('Locked')
 
         Non blocking lock:
 
             >>> from flockcontext import Flock
+            >>> from tempfile import NamedTemporaryFile
             >>>
-            >>> with open('/tmp/my.lock', 'w') as fd:
-            >>>     try:
-            >>>         with Flock(fd, blocking=False):
-            >>>             lock.fd.write('Locked\n')
-            >>>     except IOError as e:
-            >>>         print('Can not acquire lock')
+            >>> with NamedTemporaryFile() as fd:
+            ...     try:
+            ...         with Flock(fd, blocking=False):
+            ...             fd.write('Locked')
+            ...     except IOError as e:
+            ...         print('Can not acquire lock')
 
         Shared lock:
 
             >>> from flockcontext import Flock
+            >>> from tempfile import NamedTemporaryFile
             >>>
-            >>> with open('/tmp/my.lock', 'w') as fd:
-            >>>     with Flock(fd, exclusive=False):
-            >>>         lock.fd.write('Locked\n')
+            >>> with NamedTemporaryFile() as fd:
+            ...     with Flock(fd, exclusive=False):
+            ...         fd.write('Locked')
 
         Acquire and release within context:
 
             >>> from flockcontext import Flock
+            >>> from tempfile import NamedTemporaryFile
             >>>
-            >>> with open('/tmp/my.lock', 'w') as fd:
-            >>>     with Flock(fd) as lock:
-            >>>         print('Lock acquired')
-            >>>         fd.write('Locked\n')
-            >>>
-            >>>         lock.release()
-            >>>         print('Lock released')
-            >>>
-            >>>         lock.acquire()
-            >>>         print('Lock acquired')
-            >>>         fd.write('Locked\n')
+            >>> with NamedTemporaryFile() as fd:
+            ...     with Flock(fd) as lock:
+            ...         print('Lock acquired')
+            ...         fd.write('Locked')
+            ...         lock.release()
+            ...         print('Lock released')
+            ...         lock.acquire()
+            ...         print('Lock acquired')
+            ...         fd.write('Locked')
+            Lock acquired
+            Lock released
+            Lock acquired
     """
 
     def __init__(self, fd, exclusive=True, blocking=True, timeout=None):
