@@ -57,39 +57,22 @@ Get Started!
 
 Ready to contribute? Here's how to set up `flockcontext` for local development.
 
-1. Fork the `flockcontext` repo on GitHub.
-2. Clone your fork locally::
+1. Install `link uv <https://docs.astral.sh/uv/>`
+2. Install `link just <https://just.systems/>`
+3. Fork the `flockcontext` repo on GitHub.
+4. Clone your fork locally
+5. Install the project in a developement virtualenv::
 
-    $ git clone git@github.com:your_name_here/flockcontext.git
-
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
-
-    $ mkvirtualenv flockcontext
     $ cd flockcontext/
-    $ make develop
+    $ just install
 
-4. Create a branch for local development::
+6. Make your changes.
+7. Check your changes::
 
-    $ git checkout -b name-of-your-bugfix-or-feature
+    $ just check-all
+    $ just test
 
-   Now you can make your changes locally.
-
-5. When you're done making changes, check that your changes pass the tests::
-    $ make test
-
-6. Check also that they pass the linter::
-    $ pip install flake8
-    $ make lint
-
-7. And that they pass other Python versions (requires https://docs.docker.com/)::
-    $ make test-all
-
-8. Commit your changes and push your branch to GitHub::
-
-    $ git add .
-    $ git commit -m "Your detailed description of your changes."
-    $ git push origin name-of-your-bugfix-or-feature
-
+8. Commit your changes and push your branch to GitHub.
 9. Submit a pull request through the GitHub website.
 
 Pull Request Guidelines
@@ -97,10 +80,9 @@ Pull Request Guidelines
 
 Before you submit a pull request, check that it meets these guidelines:
 
+Before you submit a pull request, check that it meets these guidelines:
+
 1. The pull request should include tests.
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, 3.3, and 3.4, and for PyPy. Check
-   https://travis-ci.org/AntoineCezar/flockcontext/pull_requests
-   and make sure that the tests pass for all supported Python versions.

@@ -7,4 +7,4 @@ docker run --rm -it \
     --name "flockcontext-test-$FLAVOUR_SLUG" \
     -v "$PWD:/home/docker/code" \
     $FLAVOUR \
-    /bin/sh -c "cd /home/docker/code && python setup.py install && python setup.py test"
+    /bin/sh -c "cd /home/docker/code && just install && just test"

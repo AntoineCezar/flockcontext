@@ -1,0 +1,40 @@
+[project]
+name = "flockcontext"
+version = "1.0.0"
+description = "Improves fcntl.flock usage"
+readme = "README.rst"
+requires-python = ">=3.10"
+authors = [
+  { name = "Antoine Cezar", email = "AntoineCezar@users.noreply.github.com" }
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+  "timeoutcontext>=2.0.0",
+]
+
+[project.urls]
+Changelog = "https://github.com/me/spam/blob/master/HISTORY.rst"
+Documentation = "http://flockcontext.readthedocs.org/"
+Homepage = "https://github.com/AntoineCezar/flockcontext"
+Issues = "https://github.com/AntoineCezar/flockcontext/issues"
+Repository = "http://flockcontext.readthedocs.org/"
+
+[dependency-groups]
+dev = [
+  "coverage>=7.10.7",
+  "mypy>=1.18.2",
+  "pytest>=8.4.2",
+  "ruff>=0.14.4",
+  "sphinxcontrib-apidoc>=0.6.0",
+  "tombi>=0.6.48",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.7,<0.10.0"]
+build-backend = "uv_build"
