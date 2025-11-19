@@ -2,9 +2,6 @@
 Flockcontext
 ===============================
 
-.. image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
-        :target: http://flockcontext.readthedocs.org/
-
 .. image:: https://img.shields.io/pypi/v/flockcontext.svg
         :target: https://pypi.python.org/pypi/flockcontext
 
